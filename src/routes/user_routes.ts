@@ -1,4 +1,3 @@
-// src/routes/user_routes.ts
 import express from 'express';
 import {
     saveMethodHandler,
@@ -48,12 +47,16 @@ router.get('/main', saveMethodHandler);
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               userName:
  *                 type: string
- *               age:
- *                 type: integer
  *               email:
  *                 type: string
+ *               password:
+ *                 type: string
+ *               friends:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       201:
  *         description: Usuario creado exitosamente
@@ -78,11 +81,9 @@ router.post('/users', createUserHandler);
  *               items:
  *                 type: object
  *                 properties:
- *                  name:
+ *                   userName:
  *                     type: string
- *                  age:
- *                    type: integer
- *                  email:
+ *                   email:
  *                     type: string
  */
 router.get('/users', getAllUsersHandler);
@@ -109,12 +110,10 @@ router.get('/users', getAllUsersHandler);
  *             schema:
  *               type: object
  *               properties:
- *                  name:
+ *                 userName:
  *                   type: string
- *                 age:
- *                   type: integer
  *                 email:
- *                    type: string
+ *                   type: string
  *       404:
  *         description: Usuario no encontrado
  */
@@ -141,12 +140,16 @@ router.get('/users/:id', getUserByIdHandler);
  *           schema:
  *             type: object
  *             properties:
- *                 name:
+ *               userName:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               friends:
+ *                 type: array
+ *                 items:
  *                   type: string
- *                 age:
- *                   type: integer
- *                 email:
- *                    type: string
  *     responses:
  *       200:
  *         description: Usuario actualizado exitosamente

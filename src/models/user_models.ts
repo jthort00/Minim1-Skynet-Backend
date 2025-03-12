@@ -1,25 +1,18 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name :{
-        type: String,
-        required : true
-    },
-    age: {
-        type: Number,
-        required : true
-    },
-    email: {
-        type : String,
-        required : true
-    }
+    userName :{type: String, required : true },
+    email: { type : String, required : true},
+    password: { type:String, required: true},
+    friends : [{type:mongoose.Types.ObjectId}]
 });
 
 export interface IUser{
-    name : string;
-    age : number;
+    isactive:boolean; //is active true by default
+    userName : string;
     email : string;
-
+    //List<Dron> drons: string;
+    friends?: mongoose.Types.ObjectId[];
 }
 
 const User = mongoose.model('User', userSchema);
