@@ -30,6 +30,9 @@ export const getAllUsersHandler = async (req: Request, res: Response) => {
 export const getUserByIdHandler = async (req: Request, res: Response) => {
     try {
         const data = await getUserById(req.params.id);
+        if (!data || data.isDeleted) {
+            return res.status(404).json({ message: 'Usuario no encontrado o eliminado' });
+        }
         res.json(data);
     } catch (error: any) {
         res.status(500).json({ message: error.message });

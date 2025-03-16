@@ -10,17 +10,17 @@ export const createUser = async (userData: IUser) => {
 };
 
 export const getAllUsers = async () => {
-    return await User.find();
+    return await User.find({ isDeleted: false });
 };
 
 export const getUserById = async (id: string) => {
-    return await User.findById(id);
+    return await User.findOne({ _id: id, isDeleted: false });
 };
 
 export const updateUser = async (id: string, updateData: Partial<IUser>) => {
-    return await User.updateOne({ _id: id }, { $set: updateData });
+    return await User.updateOne({ _id: id, isDeleted: false }, { $set: updateData });
 };
 
 export const deleteUser = async (id: string) => {
-    return await User.deleteOne({ _id: id });
+    return await User.updateOne({ _id: id }, { isDeleted: true });
 };

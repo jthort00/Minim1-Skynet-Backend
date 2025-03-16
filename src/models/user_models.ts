@@ -1,10 +1,12 @@
+// src/models/user_models.ts
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
     userName :{type: String, required : true },
     email: { type : String, required : true},
     password: { type:String, required: true},
-    friends : [{type:mongoose.Types.ObjectId}]
+    friends : [{type:mongoose.Types.ObjectId}],
+    isDeleted: { type: Boolean, default: false } // borrado lógico
 });
 
 export interface IUser{
@@ -13,6 +15,7 @@ export interface IUser{
     email : string;
     //List<Dron> drons: string;
     friends?: mongoose.Types.ObjectId[];
+    isDeleted?: boolean;
 }
 
 const User = mongoose.model('User', userSchema);
