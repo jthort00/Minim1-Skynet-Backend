@@ -1,4 +1,5 @@
 // src/services/user_service.ts
+import bcrypt from 'bcryptjs';
 import User, { IUser } from '../models/user_models.js';
 
 export const saveMethod = () => {
@@ -34,6 +35,20 @@ export const deleteUser = async (id: string) => {
     return await User.updateOne({ _id: id }, { isDeleted: true });
 };
 
-export const logIn = async (email: string, password: string) => {
-    return await User.findOne({ email, password, isDeleted: false });
+export const logIn = async (email: string, password: string) => { //copilot me ayudó
+    try {
+        const user = await User.findOne({ email, isDeleted: false });
+        if (!user) {
+            return null; // No se encuentra el usuario
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password as string);
+        if (!isMatch) {
+            return null; // Las contraseñas no coinciden
+        }
+
+        return user; // Las credenciales son correctas, devuelve el usuario
+    } catch (error) {
+        return null; // Error handling
+    }
 };

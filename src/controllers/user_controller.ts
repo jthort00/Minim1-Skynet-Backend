@@ -14,7 +14,7 @@ export const saveMethodHandler = async (req: Request, res: Response) => {
 export const createUserHandler = async (req: Request, res: Response) => {
     try {
         const data = await createUser(req.body);
-        res.json(data);
+        res.json({ message: 'Usuario registrado exitosamente' });
     } catch (error: any) {
         if (error.message === 'Ya existe un usuario con este correo') {
             return res.status(400).json({ message: error.message });
@@ -37,7 +37,7 @@ export const getUserByIdHandler = async (req: Request, res: Response) => {
     try {
         const data = await getUserById(req.params.id);
         if (!data || data.isDeleted) {
-            return res.status(404).json({ message: 'Usuario no encontrado o eliminado' });
+            return res.status(404).json({ message: 'Usuario no encontrado o contraseña incorrecta' });
         }
         res.json(data);
     } catch (error: any) {
@@ -67,7 +67,7 @@ export const logInHandler = async (req: Request, res: Response) => {
         if (!data) {
             return res.status(404).json({ message: 'Usuario no encontrado o eliminado' });
         }
-        res.json(data);
+        res.json({ message: 'Sesión iniciada con éxito' });
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
