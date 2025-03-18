@@ -6,7 +6,8 @@ import {
     getAllUsersHandler,
     getUserByIdHandler,
     updateUserHandler,
-    deleteUserHandler
+    deleteUserHandler,
+    logInHandler
 } from '../controllers/user_controller.js';
 
 const router = express.Router();
@@ -35,7 +36,7 @@ router.get('/main', saveMethodHandler);
 
 /**
  * @openapi
- * /api/users:
+ * /api/users/signup:
  *   post:
  *     summary: Crea un nuevo usuario
  *     description: Añade los detalles de un nuevo usuario.
@@ -58,11 +59,40 @@ router.get('/main', saveMethodHandler);
  *                 type: array
  *                 items:
  *                   type: string
+ *               role:
+ *                 type: string
+ *                 enum: [Administrador, Usuario, Empresa, Gobierno]
  *     responses:
  *       201:
  *         description: Usuario creado exitosamente
  */
-router.post('/users', createUserHandler);
+router.post('/users/signup', createUserHandler);
+
+/**
+ * @openapi
+ * /api/users/login:
+ *   post:
+ *     summary: Crea un nuevo usuario
+ *     description: Añade un nuevo usuario con nombre de usuario y contraseña.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Usuario creado exitosamente
+ */
+
+router.post('/users/login', logInHandler);
 
 /**
  * @openapi
@@ -180,5 +210,7 @@ router.put('/users/:id', updateUserHandler);
  *         description: Usuario no encontrado
  */
 router.delete('/users/:id', deleteUserHandler);
+
+
 
 export default router;

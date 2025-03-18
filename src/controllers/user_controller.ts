@@ -1,5 +1,5 @@
 // src/controllers/user_controller.ts
-import { saveMethod, createUser, getAllUsers, getUserById, updateUser, deleteUser } from '../service/user_service.js';
+import { saveMethod, createUser, getAllUsers, getUserById, updateUser, deleteUser, logIn } from '../service/user_service.js';
 
 import express, { Request, Response } from 'express';
 
@@ -54,3 +54,15 @@ export const deleteUserHandler = async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const logInHandler = async (req: Request, res: Response) => {
+    try {
+        const data = await logIn(req.body.email, req.body.password);
+        if (!data) {
+            return res.status(404).json({ message: 'Usuario no encontrado o eliminado' });
+        }
+        res.json(data);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+}
