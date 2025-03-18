@@ -1,5 +1,9 @@
 import express from 'express';
-import { createEntryHandler, deleteEntryHandler, getAllForumHandler, getEntryByIdHandler, updateEntryHandler } from '../controllers/forum_controller.js';
+import { createEntryHandler,
+         deleteEntryHandler,
+         getAllForumHandler,
+         getEntryByIdHandler,
+         updateEntryHandler } from '../controllers/forum_controller.js';
 
 const router = express.Router();
 
