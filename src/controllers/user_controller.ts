@@ -16,6 +16,12 @@ export const createUserHandler = async (req: Request, res: Response) => {
         const data = await createUser(req.body);
         res.json(data);
     } catch (error: any) {
+        if (error.message === 'Ya existe un usuario con este correo') {
+            return res.status(400).json({ message: error.message });
+        }
+        else if (error.message === 'Ya existe un usuario con este nombre') {
+            return res.status(400).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
     }
 };

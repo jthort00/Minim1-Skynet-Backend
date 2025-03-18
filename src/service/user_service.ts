@@ -5,6 +5,15 @@ export const saveMethod = () => {
     return 'Hola';
 };
 export const createUser = async (userData: IUser) => {
+    const existingUserEmail = await User.findOne({ email: userData.email }); //Política de un correo = un usuario
+    if (existingUserEmail) {
+        throw new Error('Ya existe un usuario con este correo');
+    }
+
+    const existingUserName = await User.findOne({ userName: userData.userName }); //Política de un nombre = un usuario
+    if (existingUserName) {
+        throw new Error('Ya existe un usuario con este nombre');
+    }
     const user = new User(userData);
     return await user.save();
 };

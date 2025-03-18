@@ -39,7 +39,7 @@ router.get('/main', saveMethodHandler);
  * /api/users/signup:
  *   post:
  *     summary: Crea un nuevo usuario
- *     description: Añade los detalles de un nuevo usuario.
+ *     description: Añade los detalles de un nuevo usuario comprobando si existe un usuario primero con ese email.
  *     tags:
  *       - Users
  *     requestBody:
@@ -72,8 +72,8 @@ router.post('/users/signup', createUserHandler);
  * @openapi
  * /api/users/login:
  *   post:
- *     summary: Crea un nuevo usuario
- *     description: Añade un nuevo usuario con nombre de usuario y contraseña.
+ *     summary: Ruta para loguearse con un usuario
+ *     description: Loguea al usuario.
  *     tags:
  *       - Users
  *     requestBody:
