@@ -15,8 +15,15 @@ const userSchema = new mongoose.Schema({
 });
 
 // Encriptar la contraseña antes de guardar
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
+
+    // Verificar si la contraseña contiene caracteres especiales
+    const specialCharRegex = /[^a-zA-Z0-9]/;
+    if (specialCharRegex.test(this.password)) {
+        return next(new Error('La contraseña no debe contener caracteres especiales'));
+    }
+
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();
