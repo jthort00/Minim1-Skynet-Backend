@@ -7,6 +7,7 @@ import droneRoutes from './routes/drone_routes.js'; // Nota el .js al final
 import { corsHandler } from './middleware/corsHandler.js';
 import { loggingHandler } from './middleware/loggingHandler.js';
 import { routeNotFound } from './middleware/routeNotFound.js';
+import { validateUserFields } from './middleware/userValidationSignIn.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 

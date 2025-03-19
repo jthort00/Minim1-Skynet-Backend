@@ -6,9 +6,11 @@ import {
     getAllUsersHandler,
     getUserByIdHandler,
     updateUserHandler,
-    deleteUserHandler
+    deleteUserHandler,
+    logInHandler
 } from '../controllers/user_controller.js';
-
+import {validateUserFields} from '../middleware/userValidationSignIn.js';
+import rateLimiter from '../middleware/rateLimiter.js';
 const router = express.Router();
 
 /**
@@ -35,10 +37,10 @@ router.get('/main', saveMethodHandler);
 
 /**
  * @openapi
- * /api/users:
+ * /api/users/signup:
  *   post:
  *     summary: Crea un nuevo usuario
- *     description: Añade los detalles de un nuevo usuario.
+ *     description: Añade los detalles de un nuevo usuario comprobando si existe un usuario primero con ese email.
  *     tags:
  *       - Users
  *     requestBody:
@@ -54,15 +56,42 @@ router.get('/main', saveMethodHandler);
  *                 type: string
  *               password:
  *                 type: string
- *               friends:
- *                 type: array
  *                 items:
  *                   type: string
+ *               role:
+ *                 type: string
+ *                 enum: [Administrador, Usuario, Empresa, Gobierno]
  *     responses:
  *       201:
  *         description: Usuario creado exitosamente
  */
-router.post('/users', createUserHandler);
+router.post('/users/signup',rateLimiter,validateUserFields, createUserHandler);
+
+/**
+ * @openapi
+ * /api/users/login:
+ *   post:
+ *     summary: Ruta para loguearse con un usuario
+ *     description: Loguea al usuario.
+ *     tags:
+ *       - Users
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Usuario creado exitosamente
+ */
+
+router.post('/users/login',rateLimiter, logInHandler);
 
 /**
  * @openapi
@@ -180,5 +209,7 @@ router.put('/users/:id', updateUserHandler);
  *         description: Usuario no encontrado
  */
 router.delete('/users/:id', deleteUserHandler);
+
+
 
 export default router;
