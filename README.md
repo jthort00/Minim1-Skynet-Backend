@@ -44,6 +44,3 @@ http://localhost:9000/api-docs
 ## Dependències de Desenvolupament
 - `typescript`: Suport per a TypeScript.
 - `@types/*`: Definicions de tipus per a biblioteques utilitzades.
-
-
-

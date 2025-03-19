@@ -8,6 +8,7 @@ import { corsHandler } from './middleware/corsHandler.js';
 import { loggingHandler } from './middleware/loggingHandler.js';
 import { routeNotFound } from './middleware/routeNotFound.js';
 import { validateUserFields } from './middleware/userValidationSignIn.js';
+import { authMiddleware } from './middleware/authMiddleware.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 
@@ -42,6 +43,18 @@ const swaggerOptions = {
             {
               name: 'Main',
               description: 'Rutas principales de la API',
+            },
+            { 
+                name: 'Orders',
+                 description: 'Gestión de pedidos' ,
+            },
+            { 
+                name: 'Payments', 
+                description: 'Procesamiento de pagos' ,
+            },
+            { 
+                name: 'Messages', 
+                description: 'Mensajería entre usuarios' ,
             }
           ],
         servers: [
@@ -65,6 +78,8 @@ app.use(corsHandler);
 app.use('/api', userRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', droneRoutes);
+app.use("/api/drones", authMiddleware, droneRoutes);
+
 // Rutes de prova
 app.get('/', (req, res) => {
     res.send('Welcome to my API');
