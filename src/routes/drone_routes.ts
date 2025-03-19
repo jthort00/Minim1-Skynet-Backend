@@ -13,6 +13,17 @@ const router = express.Router();
  *   get:
  *     summary: Get all drones
  *     tags: [Drones]
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of drones per page
  *     responses:
  *       200:
  *         description: List of all drones

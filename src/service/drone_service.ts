@@ -6,9 +6,10 @@ export const createDrone = async (droneData: IDrone) => {
     return await drone.save();
 };
 
-// Get all drones
-export const getDrones = async () => {
-    return await Drone.find();
+// Get all drones with pagination
+export const getDrones = async (page: number, limit: number) => {
+    const skip = (page - 1) * limit;
+    return await Drone.find().skip(skip).limit(limit);
 };
 
 // Get a drone by ID

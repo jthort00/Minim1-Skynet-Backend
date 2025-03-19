@@ -11,11 +11,13 @@ export const createDroneHandler = async (req: Request, res: Response) => {
     }
 };
 
-// Get all drones
+// Get all drones with pagination
 export const getDronesHandler = async (req: Request, res: Response) => {
     try {
-        const data = await getDrones();
-        res.status(500).json(data);
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const data = await getDrones(page, limit);
+        res.status(200).json(data);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }
