@@ -101,6 +101,17 @@ router.post('/users/login',rateLimiter, logInHandler);
  *     description: Retorna una lista de todos los usuarios.
  *     tags:
  *       - Users
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Número de página
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Número de usuarios por página
  *     responses:
  *       200:
  *         description: Éxito

@@ -19,8 +19,9 @@ export const createUser = async (userData: IUser) => {
     return await user.save();
 };
 
-export const getAllUsers = async () => {
-    return await User.find({ isDeleted: false });
+export const getAllUsers = async (page: number, limit: number) => {
+    const skip = (page - 1) * limit;
+    return await User.find({ isDeleted: false }).skip(skip).limit(limit);
 };
 
 export const getUserById = async (id: string) => {

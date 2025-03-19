@@ -28,7 +28,9 @@ export const createUserHandler = async (req: Request, res: Response) => {
 };
 export const getAllUsersHandler = async (req: Request, res: Response) => {
     try {
-        const data = await getAllUsers();
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const data = await getAllUsers(page, limit);
         res.json(data);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
