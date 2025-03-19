@@ -7,22 +7,14 @@ export const saveMethod = () => {
 };
 export const createUser = async (userData: IUser) => {
     
-    
-    const existingUserEmail = await User.findOne({ email: userData.email }); //Política de un correo = un usuario
-    if (existingUserEmail) {
-        throw new Error('Ya existe un usuario con este correo');
-    }
-
-    const existingUserName = await User.findOne({ userName: userData.userName }); //Política de un nombre = un usuario
-    if (existingUserName) {
-        throw new Error('Ya existe un usuario con este nombre');
-    }
-    
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(userData.email)) {
         throw new Error('Formato de email inválido');
     }
-    
+    const userRegex = /^[a-zA-Z0-9_]{4,20}$/;
+    if (!userRegex.test(userData.userName)) {
+        throw new Error('Nombre de usuario inválido');
+    }
     const user = new User(userData);
     return await user.save();
 };
@@ -43,12 +35,8 @@ export const deleteUser = async (id: string) => {
     return await User.updateOne({ _id: id }, { isDeleted: true });
 };
 
-export const logIn = async (email: string, password: string) => { //copilot me ayudó
+export const logIn = async (email: string, password: string) => { 
     try {
-        // Validar que los campos no estén vacíos
-        if (!email || !password) {
-            throw new Error('El email y la contraseña son obligatorios');
-        }
 
         // Validar el formato del email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -62,10 +50,6 @@ export const logIn = async (email: string, password: string) => { //copilot me a
             throw new Error('Usuario no encontrado o eliminado');
         }
        
-        const specialCharRegex = /[^a-zA-Z0-9]/;
-        if (specialCharRegex.test(password)) {
-            throw new Error('La contraseña no debe contener caracteres especiales');
-        }
 
         // Comparar la contraseña ingresada con la almacenada
         const isMatch = await bcrypt.compare(password, user.password as string);

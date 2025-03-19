@@ -1,4 +1,5 @@
 // src/controllers/user_controller.ts
+import { error } from 'console';
 import { saveMethod, createUser, getAllUsers, getUserById, updateUser, deleteUser, logIn } from '../service/user_service.js';
 
 import express, { Request, Response } from 'express';
@@ -69,6 +70,10 @@ export const logInHandler = async (req: Request, res: Response) => {
         }
         res.json({ message: 'Sesión iniciada con éxito' });
     } catch (error: any) {
+        if (error.message === 'Contraseña incorrecta') {
+            return res.status(401).json({ message: error.message });
+        }
         res.status(500).json({ message: error.message });
+
     }
 }

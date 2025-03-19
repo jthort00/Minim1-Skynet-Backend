@@ -14,16 +14,20 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-// Encriptar la contraseña antes de guardar
+// Encriptar la contraseña antes de guardar con un middleware 
+// Se hace aquí dicho middleware para no tener que exponer la contraseña
+// En la interfaz IUser
 userSchema.pre('save', async function (next) {
     if (!this.isModified('password')) return next();
 
-    // Verificar si la contraseña contiene caracteres especiales
-    const specialCharRegex = /[^a-zA-Z0-9]/;
-    if (specialCharRegex.test(this.password)) {
-        return next(new Error('La contraseña no debe contener caracteres especiales'));
+
+    // Verificar la longitud y los caracteres permitidos en la contraseña
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!#$%^&*_\-@]).{8,20}$/;
+    if (!passwordRegex.test(this.password)) {
+        return next(new Error('La contraseña debe tener entre 8 y 20 caracteres, contener al menos una letra minúscula, una mayúscula, un número y un carácter especial.'));
     }
 
+    // Encriptar la contraseña
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
     next();

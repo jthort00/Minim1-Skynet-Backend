@@ -9,7 +9,7 @@ import {
     deleteUserHandler,
     logInHandler
 } from '../controllers/user_controller.js';
-
+import {validateUserFields} from '../middleware/userValidationSignIn.js';
 const router = express.Router();
 
 /**
@@ -66,7 +66,7 @@ router.get('/main', saveMethodHandler);
  *       201:
  *         description: Usuario creado exitosamente
  */
-router.post('/users/signup', createUserHandler);
+router.post('/users/signup',validateUserFields, createUserHandler);
 
 /**
  * @openapi
