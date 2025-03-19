@@ -9,10 +9,13 @@ export const createEntryHandler = async (req: Request, res: Response) => {
         res.status(500).json({ message: error.message });
     }
 };
+// Get all forums with pagination
 export const getAllForumHandler = async (req: Request, res: Response) => {
     try {
-        const data = await getAllForum();
-        res.json(data);
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const data = await getAllForum(page, limit);
+        res.status(200).json(data);
     } catch (error: any) {
         res.status(500).json({ message: error.message });
     }

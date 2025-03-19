@@ -5,8 +5,10 @@ export const createEntry = async (forumData: IForum) => {
     return await user.save();
 };
 
-export const getAllForum = async () => {
-    return await Forum.find();
+// Get all forums with pagination
+export const getAllForum = async (page: number, limit: number) => {
+    const skip = (page - 1) * limit;
+    return await Forum.find().skip(skip).limit(limit);
 };
 
 export const getEntryById = async (id: string) => {

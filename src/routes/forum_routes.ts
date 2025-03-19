@@ -40,20 +40,20 @@ router.post('/forum', createEntryHandler);
  *     description: Retorna una lista de todas las entradas del foro.
  *     tags:
  *       - Forum
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Number of forums per page
  *     responses:
  *       200:
- *         description: Éxito
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   name:
- *                     type: string
- *                   comment:
- *                     type: string
+ *         description: List of all forums
  */
 router.get('/forum', getAllForumHandler);
 
