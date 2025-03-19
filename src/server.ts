@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import userRoutes from './routes/user_routes.js'; // Nota el .js al final
 import forumRoutes from './routes/forum_routes.js'; // Nota el .js al final
 import droneRoutes from './routes/drone_routes.js'; // Nota el .js al final
+import gameRoutes from './routes/game_routes.js';
 import { corsHandler } from './middleware/corsHandler.js';
 import { loggingHandler } from './middleware/loggingHandler.js';
 import { routeNotFound } from './middleware/routeNotFound.js';
@@ -55,6 +56,10 @@ const swaggerOptions = {
             { 
                 name: 'Messages', 
                 description: 'Mensajería entre usuarios' ,
+            },
+            { 
+                name: 'Juegos', 
+                description: 'Juegos entre usuarios' ,
             }
           ],
         servers: [
@@ -79,6 +84,7 @@ app.use('/api', userRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', droneRoutes);
 app.use("/api/drones", authMiddleware, droneRoutes);
+app.use('/api', gameRoutes);
 
 // Rutes de prova
 app.get('/', (req, res) => {
