@@ -26,11 +26,11 @@ const router = express.Router();
  *       201:
  *         description: Mensaje enviado exitosamente
  */
-router.post("/messages", sendMessageHandler);
+router.post("/", sendMessageHandler); // Corregido: ya no es /messages
 
 /**
  * @swagger
- * /messages/{userId}/{contactId}:
+ * /api/messages/{userId}/{contactId}:
  *   get:
  *     summary: Obtener historial de mensajes entre dos usuarios
  *     tags: [Messages]
@@ -49,6 +49,6 @@ router.post("/messages", sendMessageHandler);
  *       200:
  *         description: Lista de mensajes obtenida correctamente
  */
-router.get("/messages/:userId/:contactId", getMessagesHandler);
+router.get("/:userId/:contactId", getMessagesHandler); // Corregido también
 
 export default router;

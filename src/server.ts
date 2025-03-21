@@ -85,7 +85,7 @@ app.use(corsHandler);
 app.use('/api', userRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', droneRoutes);
-app.use('/api', messagesRoutes);
+app.use('/api/messages', messagesRoutes);
 app.use('/api/payments', paymentsRoutes);
 app.use('/api', gameRoutes);
 
