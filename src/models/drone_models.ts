@@ -7,7 +7,7 @@ const ratingSchema = new mongoose.Schema({
 });
 
 const droneSchema = new mongoose.Schema({
-    id: { type: String, required: true },  // Antes era Number, ahora String (MongoDB usa ObjectId)
+    id: { type: String, required: true },  
     name: { type: String, required: true },
     model: { type: String, required: true },
     price: { type: Number, required: true },
@@ -45,7 +45,6 @@ export interface IDrone {
     createdAt?: Date;
     ratings: IRating[];
 }
-
 
 // Modelos
 const Drone = mongoose.model('Drone', droneSchema);

@@ -15,7 +15,7 @@ import {
 // Crear un nuevo dron
 export const createDroneHandler = async (req: Request, res: Response) => {
   try {
-    const droneData = { ...req.body }; // sin req.user
+    const droneData = { ...req.body }; 
     const drone = await createDrone(droneData);
     res.status(201).json(drone);
   } catch (error: any) {
@@ -133,8 +133,6 @@ export const getDronesByCategoryHandler = async (req: Request, res: Response) =>
 };
 
 
-
-
 // Obtener drones en un rango de precios
 export const getDronesByPriceRangeHandler = async (req: Request, res: Response) => {
     try {
@@ -158,7 +156,6 @@ export const getDronesByPriceRangeHandler = async (req: Request, res: Response) 
         res.status(500).json({ message: error.message || "Error al obtener drones en el rango de precios" });
     }
 };
-
 
 
 // Agregar una reseña a un dron
