@@ -46,9 +46,38 @@ export interface IDrone {
     ratings: IRating[];
 }
 
+// Mensajes
+const messageSchema = new mongoose.Schema({
+    senderId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    receiverId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    content: { type: String, required: true },
+    timestamp: { type: Date, default: Date.now }
+});
+
+// Pedidos
+const orderSchema = new mongoose.Schema({
+    droneId: { type: mongoose.Schema.Types.ObjectId, ref: 'Drone', required: true },
+    buyerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    status: { type: String, enum: ['pendiente', 'enviado', 'entregado'], default: 'pendiente' },
+    createdAt: { type: Date, default: Date.now }
+});
+
+// Pagos
+const paymentSchema = new mongoose.Schema({
+    orderId: { type: mongoose.Schema.Types.ObjectId, ref: 'Order', required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    amount: { type: Number, required: true },
+    status: { type: String, enum: ['pendiente', 'completado', 'fallido'], default: 'pendiente' },
+    createdAt: { type: Date, default: Date.now }
+});
 
 // Modelos
 const Drone = mongoose.model('Drone', droneSchema);
+const Message = mongoose.model('Message', messageSchema);
+const Order = mongoose.model('Order', orderSchema);
+const Payment = mongoose.model('Payment', paymentSchema);
 
 export default Drone;
+export { Drone, Message, Order, Payment };
 

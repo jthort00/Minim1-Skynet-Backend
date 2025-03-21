@@ -83,7 +83,6 @@ app.use(corsHandler);
 app.use('/api', userRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', droneRoutes);
-app.use("/api/drones", authMiddleware, droneRoutes);
 app.use('/api', gameRoutes);
 
 // Rutes de prova
@@ -94,7 +93,7 @@ app.get('/', (req, res) => {
 // Conexión a MongoDB
 //mongoose;
 mongoose
-    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Skynet-Database')
+    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Skynet-database')
     .then(() => console.log('Connected to DB'))
     .catch((error) => console.error('DB Connection Error:', error));
 

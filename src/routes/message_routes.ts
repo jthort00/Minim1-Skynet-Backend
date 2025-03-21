@@ -7,8 +7,13 @@ import {
   updateDroneHandler,
   addDroneReviewHandler,
   getDronesByCategoryHandler,
-  getDronesByPriceRangeHandler
-} from '../controllers/drone_controller.js';
+  getDronesByPriceRangeHandler,
+  sendMessageHandler,
+  getMessagesHandler,
+  getUserOrdersHandler,
+  getUserPaymentsHandler,
+  createOrderHandler
+} from '../controllers/message_controller.js';
 
 const router = express.Router();
 
