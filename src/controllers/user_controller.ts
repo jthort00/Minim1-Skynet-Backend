@@ -1,6 +1,7 @@
 // src/controllers/user_controller.ts
 import { error } from 'console';
-import { saveMethod, createUser, getAllUsers, getUserById, updateUser, deleteUser, logIn } from '../service/user_service.js';
+import { saveMethod, createUser, getAllUsers, getUserById, updateUser, deleteUser, logIn, addFavoriteDrone, getFavoriteDrones, removeFavoriteDrone } from '../service/user_service.js';
+
 
 import express, { Request, Response } from 'express';
 
@@ -79,3 +80,35 @@ export const logInHandler = async (req: Request, res: Response) => {
 
     }
 }
+
+export const addFavoriteDroneHandler = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const { droneId } = req.body;
+        const favorites = await addFavoriteDrone(id, droneId);
+        res.status(200).json(favorites);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const getFavoriteDronesHandler = async (req: Request, res: Response) => {
+    try {
+        const { id } = req.params;
+        const favorites = await getFavoriteDrones(id);
+        res.status(200).json(favorites);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const removeFavoriteDroneHandler = async (req: Request, res: Response) => {
+    try {
+        const { id, droneId } = req.params;
+        const favorites = await removeFavoriteDrone(id, droneId);
+        res.status(200).json(favorites);
+    } catch (error: any) {
+        res.status(500).json({ message: error.message });
+    }
+};
+

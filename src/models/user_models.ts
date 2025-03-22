@@ -11,7 +11,9 @@ const userSchema = new mongoose.Schema({
     role: { type : String,
             enum : ['Administrador', 'Usuario', 'Empresa', 'Gobierno'],
             required : true
-    }
+    },
+    favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Drone' }],
+
 });
 
 // Encriptar la contraseña antes de guardar con un middleware 

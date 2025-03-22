@@ -7,7 +7,10 @@ import {
     getUserByIdHandler,
     updateUserHandler,
     deleteUserHandler,
-    logInHandler
+    logInHandler,
+    addFavoriteDroneHandler,
+    getFavoriteDronesHandler,
+    removeFavoriteDroneHandler
 } from '../controllers/user_controller.js';
 import {validateUserFields} from '../middleware/userValidationSignIn.js';
 import rateLimiter from '../middleware/rateLimiter.js';
@@ -221,6 +224,141 @@ router.put('/users/:id', updateUserHandler);
  */
 router.delete('/users/:id', deleteUserHandler);
 
+/**
+ * @openapi
+ * /api/users/{id}/favorites:
+ *   post:
+ *     summary: Añade un drone a los favoritos del usuario
+ *     description: Agrega un drone a la lista de favoritos del usuario si no está ya incluido.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               droneId:
+ *                 type: string
+ *                 description: ID del drone a añadir como favorito
+ *     responses:
+ *       200:
+ *         description: Drone añadido a favoritos exitosamente
+ *       404:
+ *         description: Usuario no encontrado
+ */
 
+router.post('/users/:id/favorites', addFavoriteDroneHandler);
+
+/**
+ * @openapi
+ * /api/users/{id}/favorites:
+ *   get:
+ *     summary: Obtiene los drones favoritos de un usuario
+ *     description: Retorna una lista de drones que el usuario ha marcado como favoritos.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Lista de drones favoritos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Drone'
+ *       404:
+ *         description: Usuario no encontrado
+ */
+
+router.get('/users/:id/favorites', getFavoriteDronesHandler);
+
+/**
+ * @openapi
+ * /api/users/{id}/favorites/{droneId}:
+ *   delete:
+ *     summary: Elimina un drone de los favoritos del usuario
+ *     description: Quita un drone de la lista de favoritos del usuario.
+ *     tags:
+ *       - Users
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID del usuario
+ *         schema:
+ *           type: string
+ *       - name: droneId
+ *         in: path
+ *         required: true
+ *         description: ID del drone a eliminar de favoritos
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Drone eliminado de favoritos exitosamente
+ *       404:
+ *         description: Usuario no encontrado
+ */
+router.delete('/users/:id/favorites/:droneId', removeFavoriteDroneHandler);
+
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Drone:
+ *       type: object
+ *       properties:
+ *         _id:
+ *           type: string
+ *         id:
+ *           type: string
+ *         name:
+ *           type: string
+ *         model:
+ *           type: string
+ *         price:
+ *           type: number
+ *         description:
+ *           type: string
+ *         images:
+ *           type: array
+ *           items:
+ *             type: string
+ *         type:
+ *           type: string
+ *           enum: [venta, alquiler]
+ *         condition:
+ *           type: string
+ *           enum: [nuevo, usado]
+ *         location:
+ *           type: string
+ *         contact:
+ *           type: string
+ *         category:
+ *           type: string
+ *         sellerId:
+ *           type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ */
+//afegeixo el model drone perque no el té definit el swagger i es queixa
+//aixo passa per que per primer cop usem un model diferent a user
 
 export default router;

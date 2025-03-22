@@ -1,6 +1,9 @@
 // src/services/user_service.ts
 import bcrypt from 'bcryptjs';
 import User, { IUser } from '../models/user_models.js';
+import { Drone } from '../models/drone_models.js';
+import mongoose from 'mongoose';
+
 
 export const saveMethod = () => {
     return 'Hola';
@@ -62,4 +65,60 @@ export const logIn = async (email: string, password: string) => {
     } catch (error: any) {
         throw new Error(error.message || 'Error al iniciar sesión');
     }
-};
+}
+    //funcio para agregar un drone a favoritos
+    export const addFavoriteDrone = async (userId: string, droneId: string) => {
+        try {
+            const user = await User.findById(userId);
+            if (!user) throw new Error("Usuario no encontrado");
+    
+            const droneObjectId = new mongoose.Types.ObjectId(droneId);
+    
+            const droneExists = await Drone.exists({ _id: droneObjectId });
+            if (!droneExists) throw new Error("Drone no encontrado");
+    
+            const alreadyFavorite = user.favorites.some(fav => fav.equals(droneObjectId));
+            if (!alreadyFavorite) {
+                user.favorites.push(droneObjectId);
+                await user.save();
+            }
+    
+            return user.favorites;
+        } catch (error: any) {
+            throw new Error(error.message || "Error al agregar favorito");
+        }
+    };
+
+    //funcion para obtener los drones favoritos
+    export const getFavoriteDrones = async (userId: string) => {
+        try {
+            const user = await User.findById(userId).populate('favorites');
+            if (!user) throw new Error("Usuario no encontrado");
+    
+            return user.favorites;
+        } catch (error: any) {
+            throw new Error(error.message || "Error al obtener favoritos");
+        }
+    };
+    
+    //funcion para eliminar un drone de favoritos
+    export const removeFavoriteDrone = async (userId: string, droneId: string) => {
+        try {
+            const user = await User.findById(userId);
+            if (!user) throw new Error("Usuario no encontrado");
+    
+            const droneObjectId = new mongoose.Types.ObjectId(droneId);
+    
+            const droneExists = await Drone.exists({ _id: droneObjectId });
+            if (!droneExists) throw new Error("Drone no encontrado");
+    
+            user.favorites = user.favorites.filter(
+                (fav: mongoose.Types.ObjectId) => !fav.equals(droneObjectId)
+            );
+            await user.save();
+    
+            return user.favorites;
+        } catch (error: any) {
+            throw new Error(error.message || "Error al eliminar favorito");
+        }
+    };
