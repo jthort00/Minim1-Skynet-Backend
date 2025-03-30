@@ -7,8 +7,13 @@ import {
   updateDroneHandler,
   addDroneReviewHandler,
   getDronesByCategoryHandler,
-  getDronesByPriceRangeHandler
-} from '../controllers/drone_controller.js';
+  getDronesByPriceRangeHandler,
+  sendMessageHandler,
+  getMessagesHandler,
+  getUserOrdersHandler,
+  getUserPaymentsHandler,
+  createOrderHandler
+} from '../controllers/message_controller.js';
 
 const router = express.Router();
 
@@ -25,17 +30,6 @@ const router = express.Router();
  *   get:
  *     summary: Obtener todos los drones
  *     tags: [Drones]
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *         description: Page number
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *         description: Number of drones per page
  *     responses:
  *       200:
  *         description: Lista de drones

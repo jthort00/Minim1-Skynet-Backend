@@ -1,6 +1,5 @@
 import Drone, { IDrone } from '../models/drone_models.js';
 import User from '../models/user_models.js';
-import { Message, Order, Payment } from '../models/drone_models.js';
 
 // Permite que los usuarios publiquen drones en venta o alquiler
 export const createDrone = async (droneData: IDrone) => {
@@ -51,47 +50,4 @@ export const addReviewToDrone = async (droneId: string, userId: string, rating: 
     drone.ratings.push({ userId, rating, comment });
     await drone.save();
     return drone;
-};
-
-// Permite que compradores y vendedores se contacten
-export const sendMessage = async (senderId: string, receiverId: string, content: string) => {
-    const message = new Message({ senderId, receiverId, content });
-    return await message.save();
-};
-
-// Permite ver el historial de mensajes entre dos usuarios
-export const getMessages = async (userId: string, contactId: string) => {
-    return await Message.find({
-        $or: [
-            { senderId: userId, receiverId: contactId },
-            { senderId: contactId, receiverId: userId }
-        ]
-    }).sort({ timestamp: 1 });
-};
-
-// Crea una orden de compra
-export const createOrder = async (droneId: string, buyerId: string, sellerId: string) => {
-    const order = new Order({ droneId, buyerId, sellerId });
-    return await order.save();
-};
-
-// Muestra el historial de compras de un usuario
-export const getUserOrders = async (userId: string) => {
-    return await Order.find({ buyerId: userId }).populate('droneId sellerId', 'name email');
-};
-
-// Permite cambiar el estado de una compra
-export const updateOrderStatus = async (orderId: string, status: 'pendiente' | 'enviado' | 'entregado') => {
-    return await Order.findByIdAndUpdate(orderId, { status }, { new: true });
-};
-
-// Registra un pago
-export const processPayment = async (orderId: string, userId: string, amount: number) => {
-    const payment = new Payment({ orderId, userId, amount });
-    return await payment.save();
-};
-
-// Lista los pagos realizados por un usuario
-export const getUserPayments = async (userId: string) => {
-    return await Payment.find({ userId });
 };
