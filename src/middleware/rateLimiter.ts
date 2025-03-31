@@ -1,4 +1,4 @@
-import rateLimit from 'express-rate-limit';
+/*import rateLimit from 'express-rate-limit';
 
 // Middleware de limitación de intentos de login
 const rateLimiter = rateLimit({
@@ -9,4 +9,4 @@ const rateLimiter = rateLimit({
   legacyHeaders: false,
 });
 
-export default rateLimiter;
+export default rateLimiter;*/

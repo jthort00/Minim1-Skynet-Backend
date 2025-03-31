@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     userName :{type: String, required : true },
     email: { type : String, required : true},
     password: { type:String, required: true},
-    friends : [{type:mongoose.Types.ObjectId}],
+    //friends : [{type:mongoose.Types.ObjectId}],
     isDeleted: { type: Boolean, default: false }, // borrado lógico
     role: { type : String,
             enum : ['Administrador', 'Usuario', 'Empresa', 'Gobierno'],
@@ -38,7 +38,7 @@ export interface IUser{
     userName : string;
     email : string;
     //List<Dron> drons: string;
-    friends?: mongoose.Types.ObjectId[];
+    //friends?: mongoose.Types.ObjectId[];
     isDeleted?: boolean;
     role: 'Administrador' | 'Usuario' | 'Empresa' | 'Gobierno';
 }

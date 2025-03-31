@@ -5,6 +5,7 @@ import userRoutes from './routes/user_routes.js'; // Nota el .js al final
 import forumRoutes from './routes/forum_routes.js'; // Nota el .js al final
 import droneRoutes from './routes/drone_routes.js'; // Nota el .js al final
 import gameRoutes from './routes/game_routes.js';
+//import messageRoutes from './routes/message_routes.js'
 import { corsHandler } from './middleware/corsHandler.js';
 import { loggingHandler } from './middleware/loggingHandler.js';
 import { routeNotFound } from './middleware/routeNotFound.js';
@@ -81,6 +82,7 @@ app.use(loggingHandler);
 app.use(corsHandler);
 //rutas
 app.use('/api', userRoutes);
+//app.use('/api',messageRoutes);
 app.use('/api', forumRoutes);
 app.use('/api', droneRoutes);
 app.use('/api', gameRoutes);
@@ -93,7 +95,7 @@ app.get('/', (req, res) => {
 // Conexión a MongoDB
 //mongoose;
 mongoose
-    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Skynet-database')
+    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/Skynet-Database')
     .then(() => console.log('Connected to DB'))
     .catch((error) => console.error('DB Connection Error:', error));
 

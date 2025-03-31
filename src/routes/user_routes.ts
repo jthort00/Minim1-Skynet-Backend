@@ -10,7 +10,6 @@ import {
     logInHandler
 } from '../controllers/user_controller.js';
 import {validateUserFields} from '../middleware/userValidationSignIn.js';
-import rateLimiter from '../middleware/rateLimiter.js';
 const router = express.Router();
 
 /**
@@ -65,7 +64,7 @@ router.get('/main', saveMethodHandler);
  *       201:
  *         description: Usuario creado exitosamente
  */
-router.post('/users/signup',rateLimiter,validateUserFields, createUserHandler);
+router.post('/users/signup',validateUserFields, createUserHandler);
 
 /**
  * @openapi
@@ -91,7 +90,7 @@ router.post('/users/signup',rateLimiter,validateUserFields, createUserHandler);
  *         description: Usuario creado exitosamente
  */
 
-router.post('/users/login',rateLimiter, logInHandler);
+router.post('/users/login', logInHandler);
 
 /**
  * @openapi
