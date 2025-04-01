@@ -13,7 +13,10 @@ export const addReactionHandler = async (req: Request, res: Response) => {
 export const getReactionsHandler = async (req: Request, res: Response) => {
     try {
         const postId = req.params.postId;
-        const reactions = await getReactionsByPost(postId);
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+
+        const reactions = await getReactionsByPost(postId, page, limit);
         res.status(200).json(reactions);
     } catch (error: any) {
         res.status(500).json({ message: error.message });

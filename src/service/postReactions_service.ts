@@ -5,8 +5,11 @@ export const addReaction = async (reactionData: IPostReaction) => {
     return await reaction.save();
 };
 
-export const getReactionsByPost = async (postId: string) => {
-    return await PostReaction.find({ postId });
+export const getReactionsByPost = async (postId: string, page: number, limit: number) => {
+    const skip = (page - 1) * limit;
+    return await PostReaction.find({ postId })
+        .skip(skip)
+        .limit(limit);
 };
 
 export const countReactionsByType = async (postId: string, reactionType: 'like' | 'dislike') => {

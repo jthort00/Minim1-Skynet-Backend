@@ -34,7 +34,7 @@ router.post('/forum/reactions', addReactionHandler);
  * @openapi
  * /api/forum/reactions/{postId}:
  *   get:
- *     summary: Get all reactions for a forum post
+ *     summary: Get all reactions for a forum post with pagination
  *     tags:
  *       - Forum
  *     parameters:
@@ -43,6 +43,18 @@ router.post('/forum/reactions', addReactionHandler);
  *         required: true
  *         schema:
  *           type: string
+ *       - name: page
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - name: limit
+ *         in: query
+ *         required: false
+ *         schema:
+ *           type: integer
+ *         description: Number of reactions per page
  *     responses:
  *       200:
  *         description: List of reactions
