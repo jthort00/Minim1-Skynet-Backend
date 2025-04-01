@@ -15,3 +15,7 @@ export const getReactionsByPost = async (postId: string, page: number, limit: nu
 export const countReactionsByType = async (postId: string, reactionType: 'like' | 'dislike') => {
     return await PostReaction.countDocuments({ postId, reactionType });
 };
+
+export const deleteReactionById = async (reactionId: string) => {
+    return await PostReaction.findByIdAndDelete(reactionId);
+};

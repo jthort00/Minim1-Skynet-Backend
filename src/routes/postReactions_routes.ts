@@ -1,5 +1,5 @@
 import express from 'express';
-import { addReactionHandler, getReactionsHandler, countReactionsHandler } from '../controllers/postReactions_controller.js';
+import { addReactionHandler, getReactionsHandler, countReactionsHandler, deleteReactionHandler } from '../controllers/postReactions_controller.js';
 
 const router = express.Router();
 
@@ -85,5 +85,27 @@ router.get('/forum/reactions/:postId', getReactionsHandler);
  *         description: Count of reactions
  */
 router.get('/forum/reactions/count', countReactionsHandler);
+
+/**
+ * @openapi
+ * /api/forum/reactions/{reactionId}:
+ *   delete:
+ *     summary: Delete a reaction by its ID
+ *     tags:
+ *       - Forum
+ *     parameters:
+ *       - name: reactionId
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the reaction to delete
+ *     responses:
+ *       200:
+ *         description: Reaction deleted successfully
+ *       404:
+ *         description: Reaction not found
+ */
+router.delete('/forum/reactions/:reactionId', deleteReactionHandler);
 
 export default router;
